@@ -11,10 +11,22 @@ combineFiles <- function(features, type) {
 }
 
 run_analysis <- function()  {
+	# Need to include the library
+	
 	features <- read.table('features.txt')
 	testData <- combineFiles(features, 'test')
 	trainData <- combineFiles(features, 'train')
 	combined <- rbind(trainData, testData)
+	
 	out <- combined[, c(1, 2, grep('^.*(-mean\\(\\))|(-std\\(\\)).*', colnames(combined)))]
-	out
+	
+	# Rename
+	actLabels <- read.table('activity_labels.txt')[, 2]
+	out$Activity <- as.factor(out$Activity)
+	levels(out$Activity) <- actLabels
+	
+	#Tidy it up
+	melted <- melt(out, id = c("Subject", "Activity"), measures = features)
+	pivoted <- dcast(melted, Subject + Activity ~ variable, mean)
+	pivoted
 }

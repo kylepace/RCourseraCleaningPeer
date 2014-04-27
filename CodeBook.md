@@ -15,9 +15,23 @@
 	
 4.	Get rid of unneeded columns with grep
 
-	`
-
+	`combined[, c(1, 2, grep('^.*(-mean\\(\\))|(-std\\(\\)).*', colnames(combined)))]
 	
+5.	Read Activity Labels
+	
+	`actLabels <- read.table('activity_labels.txt')
+	
+6.	Label the Activity in main data set
+
+	`actLabels <- read.table('activity_labels.txt')[, 2]
+	`combined$Activity <- as.factor(combined$Activity)
+	`levels(combined$Activity) <- actLabels
+	
+7.  Melt dataset by Subject and Activity against the rest of the variables
+
+	`melted <- melt(out, id = c("Subject", "Activity"), measures = features)
+	`pivoted <- dcast(melted, Subject + Activity ~ variable, mean)
+
 
 ### Combine File Function
 Takes feature list and type (train or test) to add activity and subject to data recorded.
