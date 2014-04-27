@@ -1,0 +1,41 @@
+### Read Data into System, Probably belongs in README, keep final description in here, more detail in README.
+
+1.	Read Features
+
+	'features <- read.table('features.txt')
+	
+2.	Run Combine Data on both file types (train and test)
+
+	`testData <- combineFiles(features, 'test')
+	`trainData <- combineFiles(features, 'train')
+
+3.	Combine test and training data set
+	
+	`rbind(trainData, testData)
+	
+4.	Get rid of unneeded columns with grep
+
+	`
+
+	
+
+### Combine File Function
+Takes feature list and type (train or test) to add activity and subject to data recorded.
+
+Output is data set with labelled columns, subject, activity and 561 vectors of domain variables.
+
+1.	Read Test Data, Assign Column Names
+
+	`testData <- read.table('./test/X_test.txt')
+	`colnames(ts) <- features[, 2]
+
+2.	Read Test Labels, Subjects, Rename column
+
+	`testLabels <- read.table('./test/y_test.txt')
+	`colnames(testLabels) <- 'Activity'
+	`testSubjects <- read.table('./test/subject_test.txt')
+	`colnames(testSubjects) <- 'Subject'
+	
+3.	Stitch data together
+	
+	`testCombined <- cbind(testSubjects, testLabels, testData)
