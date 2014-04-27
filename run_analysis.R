@@ -11,7 +11,7 @@ combineFiles <- function(features, type) {
 }
 
 run_analysis <- function()  {
-	# Need to include the library
+	require('reshape2')
 	
 	features <- read.table('features.txt')
 	testData <- combineFiles(features, 'test')
