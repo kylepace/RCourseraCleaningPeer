@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta http-equiv="x-ua-compatible" content="IE=9" >
 
-<title>Read Data into System</title>
+<title>Getting and Cleaning Data Peer Assessment Code Book</title>
 
 <style type="text/css">
 body, td {
@@ -137,18 +137,117 @@ hr {
 
 
 
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 
 
 </head>
 
 <body>
-<h3>Read Data into System</h3>
+<h3>Getting and Cleaning Data Peer Assessment Code Book</h3>
+
+<h4>Final Output Variable Definitions</h4>
 
 <ol>
-<li><p>Read Test Data Into Memory</p>
+<li><p>Subject -&gt; Range 1 - 30, each participant in the study has a unique ID ranging from 1 - 30.</p></li>
+<li><p>Activity -&gt; This is the observed active body position for each of the variables measured.</p>
 
-<p>test &lt;- read.table(&#39;./test/X_test.txt&#39;)</p></li>
+<p>Range: Numeric values correspond to the original files codex.</p>
+
+<pre><code>1.  WALKING
+2.  WALKING_UPSTAIRS
+3.  WALKING_DOWNSTAIRS
+4.  SITTING
+5.  STANDING
+6.  LAYING
+</code></pre></li>
+<li><p>Mean of observed value for mean and std variables for time and frequency in the domain of the observation (for all names see below&hellip;)</p></li>
 </ol>
+
+<h4>Transformation Process</h4>
+
+<ol>
+<li><p>For each data set (train and type) merge the column sets for activity (y_type.txt) and subject (subject_type.txt) with the observed data set (X_type.txt).  Label the columns for each measurement with the features.txt codex.  Label the first column as Subject and the second column as activity</p></li>
+<li><p>After merging the data sets together, I used a regular expression (^.<em>(-mean\\( \ \))|(-std\\( \ \)).</em>) to filter out any columns that did not contain the desired measurements, standard deviation and mean.</p></li>
+<li><p>Convert the Activity and Subject column to Factors for ease of cross-cutting measurements and re-label the Activity factor with the values specified above.</p></li>
+<li><p>Then use the melt function (from library(reshape2)) to pivot the data from columns to rows using Subject and Activity as the pivot points.</p></li>
+<li><p>Once molten, use dcast to aggregate the observations by mean.</p></li>
+</ol>
+
+<h4>Script location</h4>
+
+<p><a href="https://github.com/kylepace/RCourseraCleaningPeer/blob/master/run_analysis.R">Script for all work is location here.</a></p>
+
+<p>Observed Values:</p>
+
+<p>tBodyAcc.mean&hellip;X<br/>
+tBodyAcc.mean&hellip;Y<br/>
+tBodyAcc.mean&hellip;Z<br/>
+tBodyAcc.std&hellip;X<br/>
+tBodyAcc.std&hellip;Y<br/>
+tBodyAcc.std&hellip;Z<br/>
+tGravityAcc.mean&hellip;X<br/>
+tGravityAcc.mean&hellip;Y<br/>
+tGravityAcc.mean&hellip;Z<br/>
+tGravityAcc.std&hellip;X<br/>
+tGravityAcc.std&hellip;Y<br/>
+tGravityAcc.std&hellip;Z<br/>
+tBodyAccJerk.mean&hellip;X<br/>
+tBodyAccJerk.mean&hellip;Y<br/>
+tBodyAccJerk.mean&hellip;Z<br/>
+tBodyAccJerk.std&hellip;X<br/>
+tBodyAccJerk.std&hellip;Y<br/>
+tBodyAccJerk.std&hellip;Z<br/>
+tBodyGyro.mean&hellip;X<br/>
+tBodyGyro.mean&hellip;Y<br/>
+tBodyGyro.mean&hellip;Z<br/>
+tBodyGyro.std&hellip;X<br/>
+tBodyGyro.std&hellip;Y<br/>
+tBodyGyro.std&hellip;Z<br/>
+tBodyGyroJerk.mean&hellip;X<br/>
+tBodyGyroJerk.mean&hellip;Y<br/>
+tBodyGyroJerk.mean&hellip;Z<br/>
+tBodyGyroJerk.std&hellip;X<br/>
+tBodyGyroJerk.std&hellip;Y<br/>
+tBodyGyroJerk.std&hellip;Z<br/>
+tBodyAccMag.mean..<br/>
+tBodyAccMag.std..<br/>
+tGravityAccMag.mean..<br/>
+tGravityAccMag.std..<br/>
+tBodyAccJerkMag.mean..<br/>
+tBodyAccJerkMag.std..<br/>
+tBodyGyroMag.mean..<br/>
+tBodyGyroMag.std..<br/>
+tBodyGyroJerkMag.mean..<br/>
+tBodyGyroJerkMag.std..<br/>
+fBodyAcc.mean&hellip;X<br/>
+fBodyAcc.mean&hellip;Y<br/>
+fBodyAcc.mean&hellip;Z<br/>
+fBodyAcc.std&hellip;X<br/>
+fBodyAcc.std&hellip;Y<br/>
+fBodyAcc.std&hellip;Z<br/>
+fBodyAccJerk.mean&hellip;X<br/>
+fBodyAccJerk.mean&hellip;Y<br/>
+fBodyAccJerk.mean&hellip;Z<br/>
+fBodyAccJerk.std&hellip;X<br/>
+fBodyAccJerk.std&hellip;Y<br/>
+fBodyAccJerk.std&hellip;Z<br/>
+fBodyGyro.mean&hellip;X<br/>
+fBodyGyro.mean&hellip;Y<br/>
+fBodyGyro.mean&hellip;Z<br/>
+fBodyGyro.std&hellip;X<br/>
+fBodyGyro.std&hellip;Y<br/>
+fBodyGyro.std&hellip;Z<br/>
+fBodyAccMag.mean..<br/>
+fBodyAccMag.std..<br/>
+fBodyBodyAccJerkMag.mean..<br/>
+fBodyBodyAccJerkMag.std..<br/>
+fBodyBodyGyroMag.mean..<br/>
+fBodyBodyGyroMag.std..<br/>
+fBodyBodyGyroJerkMag.mean..<br/>
+fBodyBodyGyroJerkMag.std..  </p>
 
 </body>
 
